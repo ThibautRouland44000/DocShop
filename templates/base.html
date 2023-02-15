@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>La boutique de Thibaut Rouland</title>
+</head>
+<body>
+<a href="{% url 'index' %}">
+    <h1>La boutique de Thibaut Rouland</h1>
+</a>
+
+{% if user.is_authenticated %}
+<p>Bon retour parmis nous {{ user.email }}</p>
+<a href="{% url 'profile' %}">Mon profil</a>
+<a href="{% url 'logout' %}">Déconnexion</a>
+{% else %}
+    <a href="{% url 'login' %}">Connexion</a>
+    <a href="{% url 'signup' %}">S'inscrire</a>
+{% endif%}
+
+{% if user.cart and not user.cart.ordered %}
+<p>
+    <a href="{% url 'cart' %}">Voir le panier ({{ user.cart.orders.count }})</a>
+</p>
+
+{% endif %}
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

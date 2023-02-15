@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST" action="{% url 'update-quantities' %}">
+    {% csrf_token %}
+    {{ forms.management_form }}
+    {% for form in forms %}
+    <div>
+        <h3>{{ form.instance.product.name }}</h3>
+        <img src="{{ form.instance.product.thumbnail_url }}" alt="Image du produit" style="max-widht: 250px;">
+        <p>{{ form.instance.product.description }}</p>
+        {{ form.as_p }}
+    </div>
+    {% endfor %}
+    <button type="submit">Mettre à jour les quantités</button>
+</form>
+
+<form action="{% url 'create-checkout-session' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Procéder au paiement</button>
+</form>
+
+<a href="{% url 'delete-cart' %}">Supprimer le panier</a>
+
+{% endblock %}
